@@ -1,9 +1,10 @@
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=l23212181-creator/MSFP2)
-# Práctica 2: Sistema cardiovascular
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=l23212242-alt/MSFP2)
 
-## Información de la estudiante
+# Práctica 2: Modelado y control del sistema cardiovascular mediante el modelo Windkessel
 
-Jesus Geovanny Bautista Paz \[23212181]; l23212181@tectijuana.edu.mx
+## Información del estudiante
+
+Javier Vazquez Gomez [23212242]; l23212242@tectijuana.edu.mx
 
 Modelado de Sistemas Fisiológicos
 
@@ -17,47 +18,67 @@ Departamento de Ingeniería Eléctrica y Electrónica, Tecnológico Nacional de 
 
 ## Descripción de la asignatura
 
-El modelizado de sistemas fisiológicos es una herramienta importante en Ingeniería Biomédica, permite comprender el funcionamiento del cuerpo humano, así como diseñar y evaluar terapias y dispositivos médicos; se define como el proceso de formular modelos matemáticos o computacionales que representan el comportamiento y la interacción de los sistemas biológicos y fisiológicos. Esta asignatura pretende aportar al perfil del Ingeniero Biomédico la capacidad de realizar investigación científica en el área de Biología de Sistemas con la finalidad de dirigir y participar en equipos de trabajo interdisciplinarios en contextos nacionales e internacionales, así como de proporcionar soluciones informáticas para resolver problemas en el campo de la Ingeniería Biomédica con ética profesional; lo anterior al proporcionar al estudiante bases sólidas para modelizar sistemas y diseñar controladores para la solución de problemas en las áreas de atención médica y del sector industrial médico. La construcción de analogías entre circuitos eléctricos y sistemas fisiológicos para la formulación de modelos matemáticos y el diseño de controladores mediante la experimentación in silico brindan herramientas de gran aplicación en el quehacer profesional del Ingeniero Biomédico.
+El modelado de sistemas fisiológicos permite estudiar procesos del organismo a partir de representaciones matemáticas y computacionales. En Ingeniería Biomédica, estos modelos sirven para comprender la respuesta de diferentes sistemas biológicos, realizar simulaciones y estudiar posibles estrategias de control sin intervenir directamente sobre un paciente.
 
-La asignatura de Modelado de Sistemas Fisiológicos forma parte del plan de estudios de la carrera en Ingeniería Biomédica con la siguiente competencia general del curso: Utiliza las propiedades de los circuitos RLC para describir la dinámica de sistemas fisiológicos, obtener modelos matemáticos y aplicar el control clásico, esto con el objetivo de integrar los principios de la Ingeniería de Control, la Electrónica Analógica y las Ciencias de la Computación con la Anatomía y Fisiología del cuerpo humano para proporcionar descripciones cuantitativas y cualitativas de sistemas fisiológicos complejos con el objetivo de modelizar, analizar, controlar, ilustrar y predecir su dinámica tanto en el corto como en el largo plazo.
+Durante la asignatura se relacionan conceptos de fisiología, circuitos eléctricos y teoría de control. Mediante analogías con elementos resistivos, inductivos y capacitivos se plantean ecuaciones que describen el comportamiento de los sistemas, se analizan sus respuestas y se desarrollan simulaciones en distintas herramientas computacionales.
 
 ## Objetivos
 
-1\. Calcular la función de transferencia.
-2. Determinar el modelo de ecuaciones integro-diferenciales.
-3. Calcular el error en estado estacionario y la estabilidad en lazo abierto.
-4. Emular y simular la respuesta del circuito en Simulink/Simscape a la señal "Uniform Random Number" con la siguiente configuración: min = -0.2 V; max = 1 V; seed = 106; Sample time = 0.5.
-5. Sintonizar las ganancias de un controlador PID para eliminar el error entre la entrada y la salida del sistema normotenso-hipotenso y normotenso-hipertenso.
-6. Obtener la respuesta en lazo abierto y en lazo cerrado con el controlador PID en Spyder/Python con la función de transferencia.
+1. Reconocer las variables y los elementos que integran el modelo cardiovascular Windkessel de cuatro componentes.
+2. Formular las ecuaciones integro-diferenciales y diferenciales ordinarias que describen la dinámica del circuito equivalente.
+3. Obtener las funciones de transferencia correspondientes a los individuos normotenso, hipotenso e hipertenso.
+4. Examinar los polos de cada sistema para determinar su estabilidad y calcular el error en régimen permanente.
+5. Reproducir las respuestas de los tres modelos en MATLAB/Simulink y Python a partir de una señal de excitación compartida.
+6. Ajustar controladores PID independientes para los casos hipotenso e hipertenso, empleando la respuesta normotensa como referencia.
+7. Contrastar las señales obtenidas antes y después de incorporar los controladores.
+8. Elaborar un esquema biológico que relacione los componentes del modelo eléctrico con el sistema circulatorio.
 
 ## Descripción detallada del sistema
 
-El modelo de Windkessel de cuatro elementos contiene dos elementos dinámicos. Por lo tanto, se necesitan dos estados para describir la dinámica. El vector de estados se conforma por las variables FL(t) denotando el flujo a través de la inercia arterial total, y la variable Pp(t) representando la presión sobre la distensibilidad arterial. Entonces, asumiendo Pa(t) como la presión arterial de entrada, y en consecuencia a Fa(t) como el flujo hacia la aorta o arteria pulmonar. Los parámetros son Z, C, R y L, que representan respectivamente la impedancia característica del lecho vascular pulmonar (aorta y arteria pulmonar), la distensibilidad aérea total, la resistencia periférica y la inertancia arterial. Este modelo tiene muchas ventajas importantes, por ejemplo:
+La práctica consiste en representar la circulación arterial por medio del modelo Windkessel de cuatro elementos. Se utiliza un circuito eléctrico equivalente para estudiar la relación entre la presión de entrada **Pa(t)** y la presión de salida **Pp(t)**. La impedancia **Z** describe la oposición característica al flujo en las arterias proximales, **L** representa la inercia de la sangre, **R** corresponde a la resistencia periférica y **C** expresa la distensibilidad arterial.
 
-1\. Su sencillez, unos pocos elementos interconectados son suficientes para reproducir la dinámica principal del sistema cardiovascular.
+Para comparar las condiciones fisiológicas se trabajó con los siguientes valores:
 
-2\. Existe una clara analogía entre los elementos eléctricos y los componentes hidráulicos implicados en el efecto Windkessel. En consecuencia, se relacionan fácilmente con el significado hemodinámico y el acoplamiento ventrículo-arterial.
+| Parámetro | Hipotenso | Normotenso | Hipertenso |
+|---|---:|---:|---:|
+| Z | 0.010 | 0.010 | 0.010 |
+| L | 0.001 | 0.001 | 0.001 |
+| R | 1.000 | 1.000 | 1.000 |
+| C | 3.500 | 1.500 | 1.000 |
 
-Palabras clave: Sistema cardiovascular; Presión arterial; Flujo sanguíneo; Resistencia vascular; Frecuencia cardíaca
+En esta implementación los valores de **Z**, **L** y **R** son iguales en los tres casos. La diferencia entre las condiciones se establece mediante **C**, que es mayor en el modelo hipotenso y menor en el hipertenso.
+
+Al aplicar las relaciones del circuito y la transformada de Laplace, se obtiene la siguiente función de transferencia:
+
+$$
+G(s)=\frac{P_p(s)}{P_a(s)}=\frac{LRs+RZ}{CLRZs^2+L(Z+R)s+RZ}
+$$
+
+A partir del denominador se determinan los polos y se estudia la estabilidad de los modelos. También se plantea un sistema de ecuaciones diferenciales de primer orden considerando el flujo por la inertancia y la presión de salida como variables de estado.
+
+Se realizaron simulaciones en un intervalo de **0 a 15 segundos**. En el desarrollo numérico se calcula primero la respuesta normotensa y se utiliza como entrada para obtener las respuestas hipotensa e hipertensa. Las señales se comparan mediante gráficas generadas en MATLAB y Python.
+
+Para estudiar el control del sistema se incorporaron dos controladores PID: uno para el caso hipotenso y otro para el hipertenso. Ambos buscan aproximar la respuesta de cada modelo a la señal normotensa. Las ganancias se ajustaron en Simulink con **PID Tuner** y se analizaron las respuestas en lazo abierto y lazo cerrado.
+
+Finalmente, se elaboró un diagrama biológico para identificar la relación entre los elementos del circuito equivalente y las estructuras del sistema cardiovascular.
+
+**Palabras clave:** Modelo Windkessel; Circulación arterial; Circuito equivalente; Función de transferencia; Control PID; Simulación computacional.
 
 ## Lista de archivos incluidos en el repositorio
 
-1\. Cuaderno computacional de MATLAB \[.mlx].
-2. Modelo de Simulink \[.slx].
-3. Archivos de Spyder \[.py].
-4. Imagen con los parámetros del controlador.
-5. Imágenes de las simulaciones \[.pdf].
-6. Evidencia del análisis matemático: función de transferencia, modelo de ecuaciones integro-diferenciales, error en estado estacionario y estabilidad en lazo abierto.
-
-7\. Modelo fisiológico en Biorender o BioArt.
+1. Archivo de MATLAB Live Script y documento exportado [.mlx y .pdf].
+2. Modelo del sistema implementado en Simulink [.slx].
+3. Programa utilizado para las simulaciones en Python [.py].
+4. Datos de la señal de entrada [.xlsx].
+5. Desarrollo matemático del modelo, funciones de transferencia y análisis de estabilidad [.pdf].
+6. Gráficas de las condiciones normotensa, hipotensa e hipertensa obtenidas en MATLAB y Python [.pdf].
+7. Capturas de la sintonización de los controladores PID [.png].
+8. Diagrama del sistema cardiovascular realizado en BioRender [.jpeg].
 
 ## Referencias
 
-\[1] P. A. Valle, Syllabus para Modelado de Sistemas Fisiológicos, Tecnológico Nacional de México / Instituto Tecnológico de Tijuana, Tijuana, B.C., México, 2025. Permalink: https://biomath.xyz/course/
+[1] P. A. Valle, *Syllabus para Modelado de Sistemas Fisiológicos*, Tecnológico Nacional de México / Instituto Tecnológico de Tijuana, Tijuana, B.C., México, 2026. Permalink: https://biomath.xyz/course/
 
-\[2] M. C. Khoo, Physiological Control Systems Analysis Simulation, and Estimation, 2nd ed. Piscataway, New Jersey, USA: IEEE Press, 2018, Section 4, Page 93.
+[2] M. C. Khoo, *Physiological Control Systems: Analysis, Simulation, and Estimation*, 2nd ed. IEEE Press, 2018.
 
-\[3] N. S. Nise, Control Systems Engineering, 8th ed. Hoboken, New Jersey, USA: John Wiley \& Sons, 2020.
-
-\[4] T. Kind, T. J. Faes, J. W. Lankhaar, A. Vonk-Noordegraaf \& M. Verhaegen, "Estimation of three-and four-element Windkessel parameters using subspace model identification", IEEE Transactions on Biomedical Engineering, vol. 57, issue 7, pp. 1531-1538, Jul 2010. https://doi.org/10.1109/TBME.2010.2041351
-
+[3] N. S. Nise, *Control Systems Engineering*, 8th ed. John Wiley & Sons, 2020.
