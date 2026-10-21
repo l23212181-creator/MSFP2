@@ -4,7 +4,7 @@
 
 ## Información del estudiante
 
-Javier Vazquez Gomez [23212242]; l23212242@tectijuana.edu.mx
+Bautista Paz Jesus Geovanny [23212181]; l23212181@tectijuana.edu.mx
 
 Modelado de Sistemas Fisiológicos
 
