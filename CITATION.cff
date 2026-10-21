@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Práctica 2: Modelado y control del sistema cardiovascular
+  mediante el modelo Windkessel
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: 'Jesus Geovanny '
+    family-names: Bautista Paz
+    email: l23212181@tijuana.tecnm.mx
+    affiliation: TecNM / IT Tijuana
+repository-code: 'https://github.com/l23212181-creator/MSFP2'
+keywords:
+  - Modelo Windkessel
+  - Circulación arterial
+  - ' Circuito equivalente'
+  - Función de transferencia
+  - ' Control PID'
+  - Simulación computacional
+license: BSD-2-Clause
